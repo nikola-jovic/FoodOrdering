@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using FoodOrdering.WEB.Localization.Register;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FoodOrdering.WEB.Models
@@ -31,6 +32,7 @@ namespace FoodOrdering.WEB.Models
         [Required]
         [Display(Name = "Code")]
         public string Code { get; set; }
+
         public string ReturnUrl { get; set; }
 
         [Display(Name = "Remember this browser?")]
@@ -66,19 +68,23 @@ namespace FoodOrdering.WEB.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(ResourceType = typeof(Register), Name = "LabelEmail")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessageResourceType = typeof(Register), ErrorMessageResourceName = "MsgInvalidPassword", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(ResourceType = typeof(Register), Name = "LabelPassword")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(ResourceType = typeof(Register), Name = "LabelConfirmPassword")] //Using resource instead of plain string.
+        [Compare("Password", ErrorMessageResourceType = typeof(Register), ErrorMessageResourceName = "MsgInvalidConfirmPassword")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(ResourceType = typeof(Register), Name = "LabelCompanyCode")]
+        public string CompanyCode { get; set; }
     }
 
     public class ResetPasswordViewModel
@@ -89,14 +95,14 @@ namespace FoodOrdering.WEB.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessageResourceType = typeof(Register), ErrorMessageResourceName = "MsgInvalidPassword", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(ResourceType = typeof(Register), Name = "LabelConfirmPassword")]
+        [Compare("Password", ErrorMessageResourceType = typeof(Register), ErrorMessageResourceName = "MsgInvalidConfirmPassword")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
