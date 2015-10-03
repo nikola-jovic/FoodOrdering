@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using FoodOrdering.WEB.Models;
+using FoodOrdering.WEB.Models.Identity;
 
 namespace FoodOrdering.WEB
 {

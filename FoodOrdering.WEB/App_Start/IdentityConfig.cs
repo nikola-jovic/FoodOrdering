@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using FoodOrdering.WEB.Models;
+using FoodOrdering.WEB.Models.Identity;
 
 namespace FoodOrdering.WEB
 {

@@ -1,11 +1,10 @@
-﻿using FoodOrdering.WEB.Models;
+﻿using FoodOrdering.DAL.DB;
+using FoodOrdering.WEB.Models.Identity;
+using FoodOrdering.WEB.Models.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using System;
-using System.Globalization;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -17,9 +16,11 @@ namespace FoodOrdering.WEB.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly FoodOrderingEntities _foodOrderingDb;
 
         public AccountController()
         {
+            _foodOrderingDb = new FoodOrderingDbFactory().GetDatabase();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -156,7 +157,8 @@ namespace FoodOrdering.WEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, CompanyCode = model.CompanyCode };
+                var companyId = _foodOrderingDb.Companies.First(x => x.CompanyCode.Equals(model.CompanyCode)).Id;
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, CompanyId = companyId };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
