@@ -22,8 +22,14 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Users", "List", "Users")</li>
-                        <li>@Html.ActionLink("Companies", "List", "Companies")</li>
+                        <li class="dropdown">@*TODO: Ovo treba da ide skroz desno *@
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Manage<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">                                
+                                <li>@Html.ActionLink("Users", "List", "Users")</li>
+                                <li>@Html.ActionLink("Companies", "List", "Companies")</li>
+                            </ul>
+                        </li>
+                        
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
