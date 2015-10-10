@@ -65,9 +65,6 @@
     <Compile Include="DB\Company.cs">
       <DependentUpon>FoodOrderingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB\C__MigrationHistory.cs">
-      <DependentUpon>FoodOrderingModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DB\FoodOrderingDbFactory.cs" />
     <Compile Include="DB\FoodOrderingModel.Context.cs">
       <AutoGen>True</AutoGen>

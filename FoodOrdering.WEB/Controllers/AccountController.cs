@@ -157,11 +157,21 @@ namespace FoodOrdering.WEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                var companyId = _foodOrderingDb.Companies.First(x => x.CompanyCode.Equals(model.CompanyCode)).Id;
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, CompanyId = companyId };
+                ApplicationUser user;
+                Company company = _foodOrderingDb.Companies.FirstOrDefault(x => x.CompanyCode.Equals(model.CompanyCode));
+                if (company != null)
+                {
+                    var companyId = company.Id;
+                    user = new ApplicationUser { UserName = model.Email, Email = model.Email, CompanyId = companyId };
+                }
+                else
+                {
+                    user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                }
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await UserManager.AddToRolesAsync(user.Id, "RegularUser");
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771

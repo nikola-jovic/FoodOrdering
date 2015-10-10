@@ -1,9 +1,9 @@
-using FoodOrdering.WEB.Localization.Register;
 using System.ComponentModel.DataAnnotations;
+using FoodOrdering.WEB.Localization.Register;
 
 namespace FoodOrdering.WEB.Models.ViewModels
 {
-    public class RegisterViewModel
+    public class CreateUserViewModel
     {
         [Required]
         [EmailAddress]
@@ -23,5 +23,8 @@ namespace FoodOrdering.WEB.Models.ViewModels
 
         [Display(ResourceType = typeof(Register), Name = "LabelCompanyCode")]
         public string CompanyCode { get; set; }
+
+        [Display(Name = "User Role")]
+        public Roles Role { get; set; }
     }
 }

@@ -1,12 +1,9 @@
 ﻿using FoodOrdering.DAL.DB;
 using FoodOrdering.WEB.Models;
-using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace FoodOrdering.WEB.Controllers
@@ -20,7 +17,6 @@ namespace FoodOrdering.WEB.Controllers
             _foodOrderingDb = new FoodOrderingDbFactory().GetDatabase();
         }
 
-        // GET: Companies
         public ActionResult List()
         {
             var list = _foodOrderingDb.Companies;
@@ -33,8 +29,7 @@ namespace FoodOrdering.WEB.Controllers
 
             return View(model);
         }
-
-        // GET: Companies/Details/5
+        
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -46,34 +41,36 @@ namespace FoodOrdering.WEB.Controllers
             {
                 return HttpNotFound();
             }
-            return View(company);
+            // TODO: Adapter
+            CompanyModel companyModel = new CompanyModel
+            {
+                Id = company.Id,
+                Name = company.Name,
+                CompanyCode = company.CompanyCode
+            };
+            return View(companyModel);
         }
 
-        // GET: Companies/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Companies/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,CompanyCode")] CompanyModel company)
+        public async Task<ActionResult> Create(CompanyModel company)
         {
             if (ModelState.IsValid)
             {
                 Company companyToCreate = new Company { Name = company.Name, CompanyCode = company.CompanyCode };
                 _foodOrderingDb.Companies.Add(companyToCreate);
-                _foodOrderingDb.SaveChanges();
+                await _foodOrderingDb.SaveChangesAsync();
                 return RedirectToAction("List");
             }
 
             return View(company);
         }
 
-        // GET: Companies/Edit/5
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -85,26 +82,32 @@ namespace FoodOrdering.WEB.Controllers
             {
                 return HttpNotFound();
             }
-            return View(company);
+            // TODO: Adapter
+            CompanyModel companyModel = new CompanyModel
+            {
+                Id = company.Id,
+                Name = company.Name,
+                CompanyCode = company.CompanyCode
+            };
+            return View(companyModel);
         }
 
-        // POST: Companies/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,CompanyCode")] Company company)
+        public async Task<ActionResult> Edit(CompanyModel companyModel)
         {
             if (ModelState.IsValid)
             {
+                Company company = _foodOrderingDb.Companies.Find(companyModel.Id);
+                company.CompanyCode = companyModel.CompanyCode;
+                company.Name = companyModel.Name;
                 _foodOrderingDb.Entry(company).State = EntityState.Modified;
-                _foodOrderingDb.SaveChanges();
+                await _foodOrderingDb.SaveChangesAsync();
                 return RedirectToAction("List");
             }
-            return View(company);
+            return View(companyModel);
         }
 
-        // GET: Companies/Delete/5
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -116,17 +119,36 @@ namespace FoodOrdering.WEB.Controllers
             {
                 return HttpNotFound();
             }
-            return View(company);
+            // TODO: Adapter
+            CompanyModel companyModel = new CompanyModel
+            {
+                Id = company.Id,
+                Name = company.Name,
+                CompanyCode = company.CompanyCode
+            };
+            return View(companyModel);
         }
 
-        // POST: Companies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(long id)
+        public async Task<ActionResult> DeleteConfirmed(long id)
         {
             Company company = _foodOrderingDb.Companies.Find(id);
+            if (company.AspNetUsers.Any())
+            {
+                // TODO: Adapter
+                CompanyModel companyModel = new CompanyModel
+                {
+                    Id = company.Id,
+                    Name = company.Name,
+                    CompanyCode = company.CompanyCode,
+                    Errors = true,
+                    ErrorMessage = "There are users associated with this company."
+                };
+                return View(companyModel);
+            }
             _foodOrderingDb.Companies.Remove(company);
-            _foodOrderingDb.SaveChanges();
+            await _foodOrderingDb.SaveChangesAsync();
             return RedirectToAction("List");
         }
 

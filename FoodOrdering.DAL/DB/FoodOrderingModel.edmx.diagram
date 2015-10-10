@@ -5,16 +5,15 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b57c7e222faa49cc9e8f88530bdbb1c0" Name="Diagram1">
-        <EntityTypeShape EntityType="FoodOrderingModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FoodOrderingModel.AspNetRole" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FoodOrderingModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="FoodOrderingModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FoodOrderingModel.AspNetUser" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
-        <AssociationConnector Association="FoodOrderingModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="FoodOrderingModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="FoodOrderingModel.AspNetUserRoles" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="FoodOrderingModel.Company" Width="1.5" PointX="3.375" PointY="6.75" />
+        <EntityTypeShape EntityType="FoodOrderingModel.AspNetRole" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="FoodOrderingModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="2.25" />
+        <EntityTypeShape EntityType="FoodOrderingModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="5" />
+        <EntityTypeShape EntityType="FoodOrderingModel.AspNetUser" Width="1.5" PointX="3" PointY="2.375" />
+        <EntityTypeShape EntityType="FoodOrderingModel.Company" Width="1.5" PointX="0.75" PointY="3.625" />
+        <AssociationConnector Association="FoodOrderingModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="FoodOrderingModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="FoodOrderingModel.FK_AspNetUsers_Companies" />
+        <AssociationConnector Association="FoodOrderingModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

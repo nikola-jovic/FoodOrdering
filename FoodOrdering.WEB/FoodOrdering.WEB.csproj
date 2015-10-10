@@ -169,15 +169,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Register.resx</DependentUpon>
     </Compile>
+    <Compile Include="Localization\Users\Users.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Users.resx</DependentUpon>
+    </Compile>
     <Compile Include="Models\CompanyModel.cs" />
     <Compile Include="Models\Identity\ApplicationDbContext.cs" />
-    <Compile Include="Models\Identity\ApplicationRole.cs" />
     <Compile Include="Models\Identity\ApplicationUser.cs" />
-    <Compile Include="Models\Identity\ApplicationUserRole.cs" />
     <Compile Include="Models\UsersModel.cs" />
     <Compile Include="Models\ViewModels\AddPhoneNumberViewModel.cs" />
     <Compile Include="Models\ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="Models\ViewModels\ConfigureTwoFactorViewModel.cs" />
+    <Compile Include="Models\ViewModels\CreateUserViewModel.cs" />
     <Compile Include="Models\ViewModels\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="Models\ViewModels\ExternalLoginListViewModel.cs" />
     <Compile Include="Models\ViewModels\FactorViewModel.cs" />
@@ -188,6 +192,7 @@
     <Compile Include="Models\ViewModels\ManageLoginsViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterViewModel.cs" />
     <Compile Include="Models\ViewModels\ResetPasswordViewModel.cs" />
+    <Compile Include="Models\ViewModels\Roles.cs" />
     <Compile Include="Models\ViewModels\SendCodeViewModel.cs" />
     <Compile Include="Models\ViewModels\SetPasswordViewModel.cs" />
     <Compile Include="Models\ViewModels\VerifyCodeViewModel.cs" />
@@ -262,6 +267,7 @@
     <Content Include="Views\Companies\Details.cshtml" />
     <Content Include="Views\Companies\Edit.cshtml" />
     <Content Include="Views\Companies\List.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -274,6 +280,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Register.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\Users\Users.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Users.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

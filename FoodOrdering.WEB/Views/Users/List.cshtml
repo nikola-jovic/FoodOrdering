@@ -1,39 +1,39 @@
 ﻿@model IEnumerable<FoodOrdering.WEB.Models.UserModel>
 
-@{
+    @{
     ViewBag.Title = "List";
-}
+    }
 
-<h2>List</h2>
+    <h4 style="padding-top: 2%;">User List</h4>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Company)
-        </th>
-        <th></th>
-    </tr>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company)
+            </th>            
+            <th></th>
+        </tr>
 
-    @foreach (var item in Model)
-    {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Username)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Company)
-            </td>
+            </td>            
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>
-    }
-</table>
+        }
+    </table>

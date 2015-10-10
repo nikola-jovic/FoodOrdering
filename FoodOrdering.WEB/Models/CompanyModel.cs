@@ -12,5 +12,8 @@ namespace FoodOrdering.WEB.Models
         [Required]
         [Display(Name = "Company Code")]
         public string CompanyCode { get; set; }
+
+        public bool Errors { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }
