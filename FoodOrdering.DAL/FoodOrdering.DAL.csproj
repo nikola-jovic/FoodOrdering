@@ -89,7 +89,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>FoodOrderingModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="App.Config" />
     <None Include="DB\FoodOrderingModel.edmx.diagram">
       <DependentUpon>FoodOrderingModel.edmx</DependentUpon>
     </None>
