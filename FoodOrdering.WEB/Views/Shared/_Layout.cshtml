@@ -11,13 +11,29 @@
 			position: fixed;
 			bottom: 0;
 			left: 20%;
-			right: 20%
+			right: 20%;
+		}
 
+		body {
+			background-image: url('../../Content/images/background.jpg');
+			background-position: left top;
+			background-attachment: fixed;
+			filter: light(1);
+		}
+
+		#navigation-bar-1 {
+			-ms-opacity: 0.7;
+			opacity: 0.7;
+			background-color: #000000;
+		}
+
+		form {
+			margin: 0 auto;
 		}
 	</style>
 </head>
 <body>
-	<div class="navbar navbar-inverse navbar-fixed-top">
+	<div id="navigation-bar-1" class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -34,6 +50,7 @@
 			</div>
 		</div>
 	</div>
+
 	<div class="container body-content">
 		@RenderBody()
 		<div id="footer">
