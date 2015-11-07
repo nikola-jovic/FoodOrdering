@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="FoodOrderingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -63,7 +73,92 @@
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Addresss" Type="nchar" MaxLength="255" />
           <Property Name="CompanyCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NumOfShifts" Type="int" />
+          <Property Name="ShiftOneStart" Type="time" Precision="7" />
+          <Property Name="ShiftOneEnd" Type="time" Precision="7" />
+          <Property Name="ShiftTwoStart" Type="time" Precision="7" />
+          <Property Name="ShiftTwoEnd" Type="time" Precision="7" />
+          <Property Name="ShiftThreeStart" Type="time" Precision="7" />
+          <Property Name="ShiftThreeEnd" Type="time" Precision="7" />
+          <Property Name="DeliveryOne" Type="time" Precision="7" />
+          <Property Name="DeliveryTwo" Type="time" Precision="7" />
+          <Property Name="DeliveryThree" Type="time" Precision="7" />
+          <Property Name="LockOne" Type="time" Precision="7" />
+          <Property Name="LockTwo" Type="time" Precision="7" />
+          <Property Name="LockThree" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Meals">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Category" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="Image" Type="varbinary(max)" />
+          <Property Name="Price" Type="decimal" Precision="7" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MealTags">
+          <Key>
+            <PropertyRef Name="TagId" />
+            <PropertyRef Name="MealId" />
+          </Key>
+          <Property Name="TagId" Type="bigint" Nullable="false" />
+          <Property Name="MealId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MenuMeals">
+          <Key>
+            <PropertyRef Name="MenuId" />
+            <PropertyRef Name="MealId" />
+          </Key>
+          <Property Name="MenuId" Type="bigint" Nullable="false" />
+          <Property Name="MealId" Type="bigint" Nullable="false" />
+          <Property Name="DayOfWeek" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Menus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderMeals">
+          <Key>
+            <PropertyRef Name="OrderId" />
+            <PropertyRef Name="MealId" />
+          </Key>
+          <Property Name="OrderId" Type="bigint" Nullable="false" />
+          <Property Name="MealId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TimeStamp" Type="datetime" Nullable="false" />
+          <Property Name="Contact" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="255" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <Association Name="FK_AspNetUsers_Companies">
           <End Role="Companies" Type="Self.Companies" Multiplicity="0..1" />
@@ -133,13 +228,106 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MealTags_Meals">
+          <End Role="Meals" Type="Self.Meals" Multiplicity="1" />
+          <End Role="MealTags" Type="Self.MealTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meals">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MealTags">
+              <PropertyRef Name="MealId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MealTags_Tags">
+          <End Role="Tags" Type="Self.Tags" Multiplicity="1" />
+          <End Role="MealTags" Type="Self.MealTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MealTags">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuMeals_Meals">
+          <End Role="Meals" Type="Self.Meals" Multiplicity="1" />
+          <End Role="MenuMeals" Type="Self.MenuMeals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meals">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MenuMeals">
+              <PropertyRef Name="MealId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuMeals_Menus">
+          <End Role="Menus" Type="Self.Menus" Multiplicity="1" />
+          <End Role="MenuMeals" Type="Self.MenuMeals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MenuMeals">
+              <PropertyRef Name="MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderMeals_Meals">
+          <End Role="Meals" Type="Self.Meals" Multiplicity="1" />
+          <End Role="OrderMeals" Type="Self.OrderMeals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meals">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderMeals">
+              <PropertyRef Name="MealId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderMeals_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderMeals" Type="Self.OrderMeals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderMeals">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="FoodOrderingModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Meals" EntityType="Self.Meals" Schema="milan.stojanovic" store:Type="Tables" />
+          <EntitySet Name="MealTags" EntityType="Self.MealTags" Schema="milan.stojanovic" store:Type="Tables" />
+          <EntitySet Name="MenuMeals" EntityType="Self.MenuMeals" Schema="milan.stojanovic" store:Type="Tables" />
+          <EntitySet Name="Menus" EntityType="Self.Menus" Schema="milan.stojanovic" store:Type="Tables" />
+          <EntitySet Name="OrderMeals" EntityType="Self.OrderMeals" Schema="milan.stojanovic" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="milan.stojanovic" store:Type="Tables" />
+          <EntitySet Name="Tags" EntityType="Self.Tags" Schema="milan.stojanovic" store:Type="Tables" />
           <AssociationSet Name="FK_AspNetUsers_Companies" Association="Self.FK_AspNetUsers_Companies">
             <End Role="Companies" EntitySet="Companies" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -159,6 +347,34 @@
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MealTags_Meals" Association="Self.FK_MealTags_Meals">
+            <End Role="Meals" EntitySet="Meals" />
+            <End Role="MealTags" EntitySet="MealTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MealTags_Tags" Association="Self.FK_MealTags_Tags">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="MealTags" EntitySet="MealTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuMeals_Meals" Association="Self.FK_MenuMeals_Meals">
+            <End Role="Meals" EntitySet="Meals" />
+            <End Role="MenuMeals" EntitySet="MenuMeals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuMeals_Menus" Association="Self.FK_MenuMeals_Menus">
+            <End Role="Menus" EntitySet="Menus" />
+            <End Role="MenuMeals" EntitySet="MenuMeals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderMeals_Meals" Association="Self.FK_OrderMeals_Meals">
+            <End Role="Meals" EntitySet="Meals" />
+            <End Role="OrderMeals" EntitySet="OrderMeals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderMeals_Orders" Association="Self.FK_OrderMeals_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderMeals" EntitySet="OrderMeals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_AspNetUsers" Association="Self.FK_Orders_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -186,6 +402,33 @@
           <AssociationSet Name="AspNetUserRoles" Association="FoodOrderingModel.AspNetUserRoles">
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="C__MigrationHistory" EntityType="FoodOrderingModel.C__MigrationHistory" />
+          <EntitySet Name="sysdiagrams" EntityType="FoodOrderingModel.sysdiagram" />
+          <EntitySet Name="Meals" EntityType="FoodOrderingModel.Meal" />
+          <EntitySet Name="MenuMeals" EntityType="FoodOrderingModel.MenuMeal" />
+          <EntitySet Name="Menus" EntityType="FoodOrderingModel.Menu" />
+          <EntitySet Name="Orders" EntityType="FoodOrderingModel.Order" />
+          <EntitySet Name="Tags" EntityType="FoodOrderingModel.Tag" />
+          <AssociationSet Name="FK_Orders_AspNetUsers" Association="FoodOrderingModel.FK_Orders_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuMeals_Meals" Association="FoodOrderingModel.FK_MenuMeals_Meals">
+            <End Role="Meal" EntitySet="Meals" />
+            <End Role="MenuMeal" EntitySet="MenuMeals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuMeals_Menus" Association="FoodOrderingModel.FK_MenuMeals_Menus">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="MenuMeal" EntitySet="MenuMeals" />
+          </AssociationSet>
+          <AssociationSet Name="MealTags" Association="FoodOrderingModel.MealTags">
+            <End Role="Meal" EntitySet="Meals" />
+            <End Role="Tag" EntitySet="Tags" />
+          </AssociationSet>
+          <AssociationSet Name="OrderMeals" Association="FoodOrderingModel.OrderMeals">
+            <End Role="Meal" EntitySet="Meals" />
+            <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -238,6 +481,7 @@
           <NavigationProperty Name="AspNetUserLogins" Relationship="FoodOrderingModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
           <NavigationProperty Name="Company" Relationship="FoodOrderingModel.FK_AspNetUsers_Companies" FromRole="AspNetUser" ToRole="Company" />
           <NavigationProperty Name="AspNetRoles" Relationship="FoodOrderingModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <NavigationProperty Name="Orders" Relationship="FoodOrderingModel.FK_Orders_AspNetUsers" FromRole="AspNetUser" ToRole="Order" />
         </EntityType>
         <EntityType Name="Company">
           <Key>
@@ -247,6 +491,20 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="CompanyCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUsers" Relationship="FoodOrderingModel.FK_AspNetUsers_Companies" FromRole="Company" ToRole="AspNetUser" />
+          <Property Name="Addresss" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+          <Property Name="NumOfShifts" Type="Int32" />
+          <Property Name="ShiftOneStart" Type="Time" Precision="7" />
+          <Property Name="ShiftOneEnd" Type="Time" Precision="7" />
+          <Property Name="ShiftTwoStart" Type="Time" Precision="7" />
+          <Property Name="ShiftTwoEnd" Type="Time" Precision="7" />
+          <Property Name="ShiftThreeStart" Type="Time" Precision="7" />
+          <Property Name="ShiftThreeEnd" Type="Time" Precision="7" />
+          <Property Name="DeliveryOne" Type="Time" Precision="7" />
+          <Property Name="DeliveryTwo" Type="Time" Precision="7" />
+          <Property Name="DeliveryThree" Type="Time" Precision="7" />
+          <Property Name="LockOne" Type="Time" Precision="7" />
+          <Property Name="LockTwo" Type="Time" Precision="7" />
+          <Property Name="LockThree" Type="Time" Precision="7" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="FoodOrderingModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
@@ -291,6 +549,124 @@
         <Association Name="AspNetUserRoles">
           <End Type="FoodOrderingModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="FoodOrderingModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Meal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Category" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="7" Scale="2" />
+          <NavigationProperty Name="MenuMeals" Relationship="FoodOrderingModel.FK_MenuMeals_Meals" FromRole="Meal" ToRole="MenuMeal" />
+          <NavigationProperty Name="Tags" Relationship="FoodOrderingModel.MealTags" FromRole="Meal" ToRole="Tag" />
+          <NavigationProperty Name="Orders" Relationship="FoodOrderingModel.OrderMeals" FromRole="Meal" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="MenuMeal">
+          <Key>
+            <PropertyRef Name="MenuId" />
+            <PropertyRef Name="MealId" />
+          </Key>
+          <Property Name="MenuId" Type="Int64" Nullable="false" />
+          <Property Name="MealId" Type="Int64" Nullable="false" />
+          <Property Name="DayOfWeek" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Meal" Relationship="FoodOrderingModel.FK_MenuMeals_Meals" FromRole="MenuMeal" ToRole="Meal" />
+          <NavigationProperty Name="Menu" Relationship="FoodOrderingModel.FK_MenuMeals_Menus" FromRole="MenuMeal" ToRole="Menu" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="MenuMeals" Relationship="FoodOrderingModel.FK_MenuMeals_Menus" FromRole="Menu" ToRole="MenuMeal" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TimeStamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Contact" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="FoodOrderingModel.FK_Orders_AspNetUsers" FromRole="Order" ToRole="AspNetUser" />
+          <NavigationProperty Name="Meals" Relationship="FoodOrderingModel.OrderMeals" FromRole="Order" ToRole="Meal" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Meals" Relationship="FoodOrderingModel.MealTags" FromRole="Tag" ToRole="Meal" />
+        </EntityType>
+        <Association Name="FK_Orders_AspNetUsers">
+          <End Type="FoodOrderingModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="FoodOrderingModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuMeals_Meals">
+          <End Type="FoodOrderingModel.Meal" Role="Meal" Multiplicity="1" />
+          <End Type="FoodOrderingModel.MenuMeal" Role="MenuMeal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MenuMeal">
+              <PropertyRef Name="MealId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuMeals_Menus">
+          <End Type="FoodOrderingModel.Menu" Role="Menu" Multiplicity="1" />
+          <End Type="FoodOrderingModel.MenuMeal" Role="MenuMeal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MenuMeal">
+              <PropertyRef Name="MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MealTags">
+          <End Type="FoodOrderingModel.Meal" Role="Meal" Multiplicity="*" />
+          <End Type="FoodOrderingModel.Tag" Role="Tag" Multiplicity="*" />
+        </Association>
+        <Association Name="OrderMeals">
+          <End Type="FoodOrderingModel.Meal" Role="Meal" Multiplicity="*" />
+          <End Type="FoodOrderingModel.Order" Role="Order" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -347,6 +723,20 @@
           <EntitySetMapping Name="Companies">
             <EntityTypeMapping TypeName="FoodOrderingModel.Company">
               <MappingFragment StoreEntitySet="Companies">
+                <ScalarProperty Name="LockThree" ColumnName="LockThree" />
+                <ScalarProperty Name="LockTwo" ColumnName="LockTwo" />
+                <ScalarProperty Name="LockOne" ColumnName="LockOne" />
+                <ScalarProperty Name="DeliveryThree" ColumnName="DeliveryThree" />
+                <ScalarProperty Name="DeliveryTwo" ColumnName="DeliveryTwo" />
+                <ScalarProperty Name="DeliveryOne" ColumnName="DeliveryOne" />
+                <ScalarProperty Name="ShiftThreeEnd" ColumnName="ShiftThreeEnd" />
+                <ScalarProperty Name="ShiftThreeStart" ColumnName="ShiftThreeStart" />
+                <ScalarProperty Name="ShiftTwoEnd" ColumnName="ShiftTwoEnd" />
+                <ScalarProperty Name="ShiftTwoStart" ColumnName="ShiftTwoStart" />
+                <ScalarProperty Name="ShiftOneEnd" ColumnName="ShiftOneEnd" />
+                <ScalarProperty Name="ShiftOneStart" ColumnName="ShiftOneStart" />
+                <ScalarProperty Name="NumOfShifts" ColumnName="NumOfShifts" />
+                <ScalarProperty Name="Addresss" ColumnName="Addresss" />
                 <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -359,6 +749,92 @@
             </EndProperty>
             <EndProperty Name="AspNetRole">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="FoodOrderingModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="FoodOrderingModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Meals">
+            <EntityTypeMapping TypeName="FoodOrderingModel.Meal">
+              <MappingFragment StoreEntitySet="Meals">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MenuMeals">
+            <EntityTypeMapping TypeName="FoodOrderingModel.MenuMeal">
+              <MappingFragment StoreEntitySet="MenuMeals">
+                <ScalarProperty Name="DayOfWeek" ColumnName="DayOfWeek" />
+                <ScalarProperty Name="MealId" ColumnName="MealId" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menus">
+            <EntityTypeMapping TypeName="FoodOrderingModel.Menu">
+              <MappingFragment StoreEntitySet="Menus">
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="FoodOrderingModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="FoodOrderingModel.Tag">
+              <MappingFragment StoreEntitySet="Tags">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="MealTags" TypeName="FoodOrderingModel.MealTags" StoreEntitySet="MealTags">
+            <EndProperty Name="Tag">
+              <ScalarProperty Name="Id" ColumnName="TagId" />
+            </EndProperty>
+            <EndProperty Name="Meal">
+              <ScalarProperty Name="Id" ColumnName="MealId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="OrderMeals" TypeName="FoodOrderingModel.OrderMeals" StoreEntitySet="OrderMeals">
+            <EndProperty Name="Order">
+              <ScalarProperty Name="Id" ColumnName="OrderId" />
+            </EndProperty>
+            <EndProperty Name="Meal">
+              <ScalarProperty Name="Id" ColumnName="MealId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>
