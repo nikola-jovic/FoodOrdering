@@ -1,69 +1,42 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>@ViewBag.Title - GladniSmo.com</title>
-	@Styles.Render("~/Content/css")
-	@Scripts.Render("~/bundles/modernizr")
-	<style>
-		#footer {
-			position: fixed;
-			bottom: 0;
-			left: 20%;
-			right: 20%;
-		}
-
-		body {
-			background-image: url('../../Content/images/background.jpg');
-			background-position: left top;
-			background-attachment: fixed;
-			filter: light(1);
-		}
-
-		#navigation-bar-1 {
-			-ms-opacity: 0.7;
-			opacity: 0.7;
-			background-color: #000000;
-		}
-
-		form {
-			margin: 0 auto;
-		}
-	</style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - GladniSmo.com</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-	<div id="navigation-bar-1" class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				@Html.ActionLink("GladiSmo.com", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li>@Html.ActionLink("Home", "Index", "Home")</li>
-				</ul>
-				@Html.Partial("_LoginPartial")
-			</div>
-		</div>
-	</div>
+    <div id="navigation-bar-1" class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("GladniSmo.com", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
 
-	<div class="container body-content">
-		@RenderBody()
-		<div id="footer">
-			<hr />
-			<footer>
-				<p align="center">&copy; @DateTime.Now.Year - GladniSmo.com</p>
-			</footer>
-		</div>
-	</div>
+    <div class="container">
+        @RenderBody()
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <p align="center" style="padding-top: 5px;">&copy; @DateTime.Now.Year - GladniSmo.com</p>
+        </div>
+    </footer>
 
-
-	@Scripts.Render("~/bundles/jquery")
-	@Scripts.Render("~/bundles/bootstrap")
-	@RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
 </html>
