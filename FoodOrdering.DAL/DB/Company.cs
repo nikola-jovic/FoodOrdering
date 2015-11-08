@@ -23,6 +23,20 @@ namespace FoodOrdering.DAL.DB
         public long Id { get; set; }
         public string Name { get; set; }
         public string CompanyCode { get; set; }
+        public string Addresss { get; set; }
+        public Nullable<int> NumOfShifts { get; set; }
+        public Nullable<System.TimeSpan> ShiftOneStart { get; set; }
+        public Nullable<System.TimeSpan> ShiftOneEnd { get; set; }
+        public Nullable<System.TimeSpan> ShiftTwoStart { get; set; }
+        public Nullable<System.TimeSpan> ShiftTwoEnd { get; set; }
+        public Nullable<System.TimeSpan> ShiftThreeStart { get; set; }
+        public Nullable<System.TimeSpan> ShiftThreeEnd { get; set; }
+        public Nullable<System.TimeSpan> DeliveryOne { get; set; }
+        public Nullable<System.TimeSpan> DeliveryTwo { get; set; }
+        public Nullable<System.TimeSpan> DeliveryThree { get; set; }
+        public Nullable<System.TimeSpan> LockOne { get; set; }
+        public Nullable<System.TimeSpan> LockTwo { get; set; }
+        public Nullable<System.TimeSpan> LockThree { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }

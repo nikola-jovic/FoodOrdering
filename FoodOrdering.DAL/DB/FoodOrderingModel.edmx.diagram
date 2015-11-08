@@ -14,6 +14,18 @@
         <AssociationConnector Association="FoodOrderingModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="FoodOrderingModel.FK_AspNetUsers_Companies" />
         <AssociationConnector Association="FoodOrderingModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="FoodOrderingModel.C__MigrationHistory" Width="1.5" PointX="3.75" PointY="8.125" />
+        <EntityTypeShape EntityType="FoodOrderingModel.sysdiagram" Width="1.5" PointX="0.75" PointY="10.125" />
+        <EntityTypeShape EntityType="FoodOrderingModel.Meal" Width="1.5" PointX="7.75" PointY="3.875" />
+        <EntityTypeShape EntityType="FoodOrderingModel.MenuMeal" Width="1.5" PointX="10" PointY="4.25" />
+        <EntityTypeShape EntityType="FoodOrderingModel.Menu" Width="1.5" PointX="7.75" PointY="8.375" />
+        <EntityTypeShape EntityType="FoodOrderingModel.Order" Width="1.5" PointX="10" PointY="0.75" />
+        <EntityTypeShape EntityType="FoodOrderingModel.Tag" Width="1.5" PointX="10" PointY="7.125" />
+        <AssociationConnector Association="FoodOrderingModel.FK_Orders_AspNetUsers" />
+        <AssociationConnector Association="FoodOrderingModel.FK_MenuMeals_Meals" />
+        <AssociationConnector Association="FoodOrderingModel.FK_MenuMeals_Menus" />
+        <AssociationConnector Association="FoodOrderingModel.MealTags" />
+        <AssociationConnector Association="FoodOrderingModel.OrderMeals" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
