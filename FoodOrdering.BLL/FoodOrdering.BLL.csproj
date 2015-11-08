@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,7 +43,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLLNinjectModule.cs" />
+    <Compile Include="Requests\GetCompaniesRequest.cs" />
+    <Compile Include="Responses\Company.cs" />
+    <Compile Include="Responses\GetCompaniesResponse.cs" />
+    <Compile Include="Adapters\GetCompaniesAdapter.cs" />
+    <Compile Include="Services\GetCompaniesService.cs" />
+    <Compile Include="Adapters\IGetCompaniesAdapter.cs" />
+    <Compile Include="Services\IGetCompaniesService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FoodOrdering.DAL\FoodOrdering.DAL.csproj">
+      <Project>{2C46AAC3-533A-48E6-928A-B9CE6B8DFCC0}</Project>
+      <Name>FoodOrdering.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

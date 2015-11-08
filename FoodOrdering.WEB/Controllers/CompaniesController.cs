@@ -1,35 +1,35 @@
-﻿using FoodOrdering.DAL.DB;
+﻿using FoodOrdering.BLL.Requests;
+using FoodOrdering.BLL.Responses;
+using FoodOrdering.BLL.Services;
+using FoodOrdering.DAL.DB;
 using FoodOrdering.WEB.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Company = FoodOrdering.DAL.DB.Company;
 
 namespace FoodOrdering.WEB.Controllers
 {
     public class CompaniesController : Controller
     {
         private readonly FoodOrderingEntities _foodOrderingDb;
+        private readonly IGetCompaniesService _getCompaniesService;
 
-        public CompaniesController()
+        public CompaniesController(FoodOrderingEntities foodOrderingDb, IGetCompaniesService getCompaniesService)
         {
-            _foodOrderingDb = new FoodOrderingDbFactory().GetDatabase();
+            _foodOrderingDb = foodOrderingDb;
+            _getCompaniesService = getCompaniesService;
         }
 
-        public ActionResult List()
+        public async Task<ActionResult> List()
         {
-            var list = _foodOrderingDb.Companies;
-            var model = list.Select(company => new CompanyModel
-            {
-                Id = company.Id,
-                CompanyCode = company.CompanyCode,
-                Name = company.Name
-            }).ToList();
-
-            return View(model);
+            CompanyModel model = new CompanyModel();
+            GetCompaniesResponse response = await _getCompaniesService.GetCompanies(new GetCompaniesRequest());
+            return View(model.Adapt(response.Companies));
         }
-        
+
         public ActionResult Details(long? id)
         {
             if (id == null)
