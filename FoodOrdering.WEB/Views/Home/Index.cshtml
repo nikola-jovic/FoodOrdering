@@ -1,5 +1,119 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+	ViewBag.Title = "Home Page";
 }
 
-<div class="row"></div>
+<div class="row">
+
+	<div class="panel with-nav-tabs panel-default">
+		<div class="panel-heading">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#tab1default" data-toggle="tab">Ponedeljak</a></li>
+				<li><a href="#tab2default" data-toggle="tab">Utorak</a></li>
+				<li><a href="#tab3default" data-toggle="tab">Sreda</a></li>
+				<li><a href="#tab3default" data-toggle="tab">Četvrtak</a></li>
+				<li><a href="#tab3default" data-toggle="tab">Petak</a></li>
+				<li><a href="#tab3default" data-toggle="tab">Subota</a></li>
+			</ul>
+		</div>
+		<div class="panel-body">
+			<div class="tab-content">
+				<div class="tab-pane fade in active" id="tab1default">
+					<div class="tab-pane fade in active" id="tab1default">
+						<table id="index-table">
+							<tbody>
+								<tr class="spaceUnder">
+									<td>
+										<img src="http://blogs.plos.org/obesitypanacea/files/2014/10/sandwich.jpg" width="150" height="150" style="float: left">
+									</td>
+									<td>
+										<h4>SENDVIČ SA KULENOM</h4>
+										<p>pavlaka, sir, paradajz, jogurt</p>
+									</td>
+								</tr>
+							<tr class="spaceUnder">
+								<td>
+									<img src="http://zena.blic.rs/data/images/2009-08-13/1938_pohovana-feta_iff.jpg?ver=1343812290" width="150" height="150" style="float: left">
+								</td>
+								<td>
+									<h4>POHOVAN SIR</h4>
+									<p>pomfrit, tatar sos, hleb</p>
+								</td>
+							</tr>
+							<tr class="spaceUnder">
+								<td>
+									<img src="http://pinkradio.com/_pictures/_recepti/oslic-iz-rerne-sa-puno-zacina.bmp" width="150" height="150" style="float: left">
+								</td>
+								<td>
+									<h4>PEČENI OSLIĆ (POSNO)
+									</h4>
+									<p>u foliji sa povrcem, maslinovo ulje, hleb</p>
+								</td>
+							</tr>
+								<tr class="spaceUnder">
+									<td>
+										<img src="http://zena.blic.rs/data/images/2012-05-10/25910_jela-od-krompira-57-foto-vladislav-mitic_iff.jpg?ver=1336643709" width="150" height="150" style="float: left">
+									</td>
+									<td>
+										<h4>
+											ČUFTE U PARADAJZ SOSU
+										</h4>
+										<p>pire krompir, vitaminska salata, hleb</p>
+									</td>
+								</tr>
+								<tr class="spaceUnder">
+									<td>
+										<img src="http://www.lepotaizdravlje.rs/wp-content/uploads/2013/03/Punjene-tikvice.jpg" width="150" height="150" style="float: left">
+									</td>
+									<td>
+										<h4>
+											PUNJENE TIKVICE (VEGE)
+										</h4>
+										<p>zapečene, sa soja bolonjezom</p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<hr>
+					</div>
+
+
+
+
+				</div>
+				<div class="tab-pane fade" id="tab2default">Default 2</div>
+				<div class="tab-pane fade" id="tab3default">Default 3</div>
+				<div class="tab-pane fade" id="tab4default">Default 4</div>
+				<div class="tab-pane fade" id="tab5default">Default 5</div>
+			</div>
+		</div>
+	</div>
+
+	@*<div class="tabs">
+			<div class="tab"><div class="tab-box"><center>KURCINA</center></div></div>
+			<div class="tab"><div class="tab-box"></div></div>
+			<div class="tab active">
+				<div class="tab-box"></div>
+			</div>
+			<div class="tab">
+				<div class="tab-box"></div>
+			</div>
+			<div class="tab"><div class="tab-box"></div></div>
+			<div class="tab">
+				<div class="tab-box"></div>
+			</div>
+
+		</div>
+		<div class="content">
+
+		</div>*@
+
+
+</div>
+<script>
+	setTimeout(function () {
+		$(".tab").click(function () {
+			$(".tab").removeClass("active");
+			$(this).addClass("active");
+		});
+	}, 3000);
+</script>
