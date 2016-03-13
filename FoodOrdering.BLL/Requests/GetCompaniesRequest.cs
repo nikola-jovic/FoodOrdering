@@ -1,7 +1,6 @@
 ﻿namespace FoodOrdering.BLL.Requests
 {
-    public class GetCompaniesRequest
+    public class GetCompaniesRequest : Request
     {
-        
     }
 }

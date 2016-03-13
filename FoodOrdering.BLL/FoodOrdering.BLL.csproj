@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
@@ -44,13 +48,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLLNinjectModule.cs" />
+    <Compile Include="Error.cs" />
+    <Compile Include="Requests\CreateCompanyRequest.cs" />
+    <Compile Include="Requests\DeleteCompanyRequest.cs" />
     <Compile Include="Requests\GetCompaniesRequest.cs" />
+    <Compile Include="Requests\GetCompanyRequest.cs" />
+    <Compile Include="Request.cs" />
+    <Compile Include="Requests\UpdateCompanyRequest.cs" />
+    <Compile Include="Response.cs" />
     <Compile Include="Responses\Company.cs" />
     <Compile Include="Responses\GetCompaniesResponse.cs" />
     <Compile Include="Adapters\GetCompaniesAdapter.cs" />
+    <Compile Include="Responses\GetCompanyResponse.cs" />
     <Compile Include="Services\GetCompaniesService.cs" />
-    <Compile Include="Adapters\IGetCompaniesAdapter.cs" />
-    <Compile Include="Services\IGetCompaniesService.cs" />
+    <Compile Include="Adapters\ICompaniesAdapter.cs" />
+    <Compile Include="Services\ICompaniesService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

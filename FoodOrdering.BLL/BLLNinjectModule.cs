@@ -8,8 +8,8 @@ namespace FoodOrdering.BLL
     {
         public override void Load()
         {
-            Bind<IGetCompaniesService>().To<GetCompaniesService>().InSingletonScope();
-            Bind<IGetCompaniesAdapter>().To<GetCompaniesAdapter>().InSingletonScope();
+            Bind<ICompaniesService>().To<CompaniesService>().InSingletonScope();
+            Bind<ICompaniesAdapter>().To<CompaniesAdapter>().InSingletonScope();
         }
     }
 }

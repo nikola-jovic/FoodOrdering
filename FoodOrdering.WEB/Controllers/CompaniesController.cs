@@ -1,54 +1,47 @@
 ﻿using FoodOrdering.BLL.Requests;
-using FoodOrdering.BLL.Responses;
 using FoodOrdering.BLL.Services;
-using FoodOrdering.DAL.DB;
 using FoodOrdering.WEB.Models;
-using System.Data.Entity;
+using System;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Company = FoodOrdering.DAL.DB.Company;
 
 namespace FoodOrdering.WEB.Controllers
 {
     public class CompaniesController : Controller
     {
-        private readonly FoodOrderingEntities _foodOrderingDb;
-        private readonly IGetCompaniesService _getCompaniesService;
+        private readonly ICompaniesService _companiesService;
 
-        public CompaniesController(FoodOrderingEntities foodOrderingDb, IGetCompaniesService getCompaniesService)
+        public CompaniesController(ICompaniesService companiesService)
         {
-            _foodOrderingDb = foodOrderingDb;
-            _getCompaniesService = getCompaniesService;
+            _companiesService = companiesService;
         }
 
         public async Task<ActionResult> List()
         {
-            CompanyModel model = new CompanyModel();
-            GetCompaniesResponse response = await _getCompaniesService.GetCompanies(new GetCompaniesRequest());
+            var model = new CompanyModel();
+            var response = await _companiesService.GetCompanies();
+
             return View(model.Adapt(response.Companies));
         }
 
-        public ActionResult Details(long? id)
+        public async Task<ActionResult> Details(long? id) //TODO: maybe pass in the whole request instead of just ID?
         {
-            if (id == null)
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var model = new CompanyModel();
+            var getCompanyResponse = await _companiesService.GetCompanyById(new GetCompanyRequest
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Company company = _foodOrderingDb.Companies.Find(id);
-            if (company == null)
-            {
-                return HttpNotFound();
-            }
-            // TODO: Adapter
-            CompanyModel companyModel = new CompanyModel
-            {
-                Id = company.Id,
-                Name = company.Name,
-                CompanyCode = company.CompanyCode
-            };
-            return View(companyModel);
+                CompanyId = (long)id,
+                CorrelationId = Guid.NewGuid().ToString(),
+                Requestor = ClaimsPrincipal.Current.Identity.Name
+            });
+
+            if (getCompanyResponse.Company == null) return HttpNotFound();
+
+            return View(model.Adapt(getCompanyResponse.Company));
         }
 
         public ActionResult Create()
@@ -62,34 +55,32 @@ namespace FoodOrdering.WEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                Company companyToCreate = new Company { Name = company.Name, CompanyCode = company.CompanyCode };
-                _foodOrderingDb.Companies.Add(companyToCreate);
-                await _foodOrderingDb.SaveChangesAsync();
+                await _companiesService.CreateCompany(new CreateCompanyRequest
+                {
+                    Name = company.Name,
+                    CompanyCode = company.CompanyCode
+                });
                 return RedirectToAction("List");
             }
 
             return View(company);
         }
 
-        public ActionResult Edit(long? id)
+        public async Task<ActionResult> Edit(long? id)
         {
-            if (id == null)
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var model = new CompanyModel();
+            var getCompanyResponse = await _companiesService.GetCompanyById(new GetCompanyRequest
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Company company = _foodOrderingDb.Companies.Find(id);
-            if (company == null)
-            {
-                return HttpNotFound();
-            }
-            // TODO: Adapter
-            CompanyModel companyModel = new CompanyModel
-            {
-                Id = company.Id,
-                Name = company.Name,
-                CompanyCode = company.CompanyCode
-            };
-            return View(companyModel);
+                CompanyId = (long)id,
+                CorrelationId = Guid.NewGuid().ToString(),
+                Requestor = ClaimsPrincipal.Current.Identity.Name
+            });
+
+            if (getCompanyResponse.Company == null) return HttpNotFound();
+
+            return View(model.Adapt(getCompanyResponse.Company));
         }
 
         [HttpPost]
@@ -98,67 +89,58 @@ namespace FoodOrdering.WEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                Company company = _foodOrderingDb.Companies.Find(companyModel.Id);
-                company.CompanyCode = companyModel.CompanyCode;
-                company.Name = companyModel.Name;
-                _foodOrderingDb.Entry(company).State = EntityState.Modified;
-                await _foodOrderingDb.SaveChangesAsync();
+                await _companiesService.UpdateCompany(new UpdateCompanyRequest
+                {
+                    Name = companyModel.Name,
+                    CompanyCode = companyModel.CompanyCode
+                });
                 return RedirectToAction("List");
             }
             return View(companyModel);
         }
 
-        public ActionResult Delete(long? id)
+        public async Task<ActionResult> Delete(long? id)
         {
-            if (id == null)
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var model = new CompanyModel();
+            var getCompanyResponse = await _companiesService.GetCompanyById(new GetCompanyRequest
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Company company = _foodOrderingDb.Companies.Find(id);
-            if (company == null)
-            {
-                return HttpNotFound();
-            }
-            // TODO: Adapter
-            CompanyModel companyModel = new CompanyModel
-            {
-                Id = company.Id,
-                Name = company.Name,
-                CompanyCode = company.CompanyCode
-            };
-            return View(companyModel);
+                CompanyId = (long)id,
+                CorrelationId = Guid.NewGuid().ToString(),
+                Requestor = ClaimsPrincipal.Current.Identity.Name
+            });
+
+            if (getCompanyResponse.Company == null) return HttpNotFound();
+
+            return View(model.Adapt(getCompanyResponse.Company));
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(long id)
         {
-            Company company = _foodOrderingDb.Companies.Find(id);
-            if (company.AspNetUsers.Any())
+            var model = new CompanyModel();
+            var getCompanyResponse = await _companiesService.GetCompanyById(new GetCompanyRequest
             {
-                // TODO: Adapter
-                CompanyModel companyModel = new CompanyModel
-                {
-                    Id = company.Id,
-                    Name = company.Name,
-                    CompanyCode = company.CompanyCode,
-                    Errors = true,
-                    ErrorMessage = "There are users associated with this company."
-                };
-                return View(companyModel);
+                CompanyId = id,
+                CorrelationId = Guid.NewGuid().ToString(),
+                Requestor = ClaimsPrincipal.Current.Identity.Name
+            });
+            if (getCompanyResponse.Company.Users.Any())
+            {
+                model = model.Adapt(getCompanyResponse.Company);
+                model.Errors = true;
+                model.ErrorMessage = "There are users associated with this company.";
+                return View(model);
             }
-            _foodOrderingDb.Companies.Remove(company);
-            await _foodOrderingDb.SaveChangesAsync();
+            await _companiesService.DeleteCompany(new DeleteCompanyRequest
+            {
+                CompanyId = id,
+                CorrelationId = Guid.NewGuid().ToString(),
+                Requestor = ClaimsPrincipal.Current.Identity.Name
+            });
             return RedirectToAction("List");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _foodOrderingDb.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
