@@ -3,14 +3,13 @@ using FoodOrdering.WEB.Models;
 using FoodOrdering.WEB.Models.Identity;
 using FoodOrdering.WEB.Models.ViewModels;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity.Owin;
 
 namespace FoodOrdering.WEB.Controllers
 {
@@ -224,5 +223,5 @@ namespace FoodOrdering.WEB.Controllers
             }
             return RedirectToAction("List");
         }
-}
     }
+}

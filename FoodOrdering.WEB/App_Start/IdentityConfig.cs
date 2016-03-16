@@ -7,6 +7,7 @@ using Microsoft.Owin.Security;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using IdentityDbContext = FoodOrdering.WEB.Models.Identity.IdentityDbContext;
 
 namespace FoodOrdering.WEB
 {
@@ -38,7 +39,7 @@ namespace FoodOrdering.WEB
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(new IdentityDbContext()));
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
