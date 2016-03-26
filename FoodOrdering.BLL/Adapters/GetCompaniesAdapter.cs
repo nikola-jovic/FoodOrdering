@@ -2,16 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Company = FoodOrdering.BLL.Responses.DTO.Company;
 
 namespace FoodOrdering.BLL.Adapters
 {
     public class CompaniesAdapter : ICompaniesAdapter
     {
-        public IList<Responses.Company> Adapt(IList<Company> companies)
+        public IList<Company> Adapt(IList<DAL.DB.Company> companies)
         {
             if (companies == null) throw new ArgumentNullException("companies");
 
-            return companies.Select(company => new Responses.Company
+            return companies.Select(company => new Company
             {
                 Id = company.Id,
                 Name = company.Name,
@@ -19,11 +20,11 @@ namespace FoodOrdering.BLL.Adapters
             }).ToList();
         }
 
-        public Responses.Company Adapt(Company company)
+        public Company Adapt(DAL.DB.Company company)
         {
             if (company == null) throw new ArgumentNullException("company");
 
-            return new Responses.Company
+            return new Company
             {
                 Id = company.Id,
                 CompanyCode = company.CompanyCode,

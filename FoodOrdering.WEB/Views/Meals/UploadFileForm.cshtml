@@ -1,0 +1,12 @@
+﻿@{
+	ViewBag.Title = "Upload meals and tags";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4 style="padding-top: 2%;">Upload meals and tags</h4>
+
+@using (Html.BeginForm("UploadFile", "Meals", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "submitButton.disabled = true; return true;" }))
+{
+	<input type="file" name="file" class="btn btn-default" /><br />
+	<input type="submit" name="submitButton" id="Submit" value="Upload" class="btn btn-default" />
+}

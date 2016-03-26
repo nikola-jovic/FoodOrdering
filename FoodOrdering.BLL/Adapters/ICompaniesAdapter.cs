@@ -1,12 +1,12 @@
-﻿using FoodOrdering.DAL.DB;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Company = FoodOrdering.BLL.Responses.DTO.Company;
 
 namespace FoodOrdering.BLL.Adapters
 {
-    public interface ICompaniesAdapter
-    {
-        IList<Responses.Company> Adapt(IList<Company> companies);
+	public interface ICompaniesAdapter
+	{
+		IList<Company> Adapt(IList<DAL.DB.Company> companies);
 
-        Responses.Company Adapt(Company company);
-    }
+		Company Adapt(DAL.DB.Company company);
+	}
 }

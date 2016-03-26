@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using FoodOrdering.DAL.DB;
 
-namespace FoodOrdering.BLL.Responses
+namespace FoodOrdering.BLL.Responses.DTO
 {
     public class Company
     {

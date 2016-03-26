@@ -64,7 +64,34 @@ namespace FoodOrdering.DAL.Repositories
             }
         }
 
-        public async Task SaveAsync()
+	    public async Task<IList<Meal>> GetMealsAsync()
+	    {
+			using (var database = _foodOrderingDbFactory.GetDatabase())
+			{
+				return await database.Meals.ToListAsync();
+			}
+		}
+
+	    public async Task<Meal> GetMealByIdAsync(long mealId)
+	    {
+		    using (var database = _foodOrderingDbFactory.GetDatabase())
+		    {
+				return await database.Meals.FindAsync(mealId);
+			}
+	    }
+
+	    public async Task DeleteMealAsync(long mealId)
+	    {
+			var meal = new Meal { Id = mealId };
+			using (var database = _foodOrderingDbFactory.GetDatabase())
+			{
+				database.Meals.Attach(meal);
+				database.Meals.Remove(meal);
+				await database.SaveChangesAsync();
+			}
+	    }
+
+	    public async Task SaveAsync()
         {
             using (var database = _foodOrderingDbFactory.GetDatabase())
             {

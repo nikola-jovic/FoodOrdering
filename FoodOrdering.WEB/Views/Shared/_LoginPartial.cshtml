@@ -13,7 +13,8 @@
                     @if (User.IsInRole("SuperAdmin"))
                     {
                         <li>@Html.ActionLink("Users", "List", "Users")</li>
-                        <li>@Html.ActionLink("Companies", "List", "Companies")</li>
+	                    <li>@Html.ActionLink("Companies", "List", "Companies")</li>
+						<li>@Html.ActionLink("Meals", "List", "Meals")</li>
                         <li role="separator" class="divider"></li>
                     }
                     <li>@Html.ActionLink("Manage your account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>

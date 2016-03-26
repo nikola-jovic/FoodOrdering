@@ -17,6 +17,12 @@ namespace FoodOrdering.DAL.Repositories
 
         Task DeleteCompanyAsync(long companyId);
 
-        Task SaveAsync();
+	    Task<IList<Meal>> GetMealsAsync();
+
+		Task<Meal> GetMealByIdAsync(long mealId);
+
+		Task DeleteMealAsync(long mealId);
+
+		Task SaveAsync();
     }
 }
