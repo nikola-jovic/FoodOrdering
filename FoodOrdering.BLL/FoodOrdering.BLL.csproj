@@ -60,7 +60,7 @@
     <Compile Include="Responses\GetCompaniesResponse.cs" />
     <Compile Include="Adapters\GetCompaniesAdapter.cs" />
     <Compile Include="Responses\GetCompanyResponse.cs" />
-    <Compile Include="Services\GetCompaniesService.cs" />
+    <Compile Include="Services\CompaniesService.cs" />
     <Compile Include="Adapters\ICompaniesAdapter.cs" />
     <Compile Include="Services\ICompaniesService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
