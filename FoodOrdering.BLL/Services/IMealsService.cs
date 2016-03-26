@@ -12,7 +12,9 @@ namespace FoodOrdering.BLL.Services
 
 		Task CreateMeal(CreateMealRequest request);
 
-		Task UpdateMeal(UpdateMealRequest request);
+        Task BulkCreateMeals(BulkCreateMealsRequest request);
+
+        Task UpdateMeal(UpdateMealRequest request);
 
 		Task DeleteMeal(DeleteMealRequest request);
 	}

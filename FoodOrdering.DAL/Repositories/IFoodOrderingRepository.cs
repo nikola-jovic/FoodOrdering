@@ -23,6 +23,10 @@ namespace FoodOrdering.DAL.Repositories
 
 		Task DeleteMealAsync(long mealId);
 
+        Task BulkCreateMealTagsAsync(IList<string> mealTags);
+
+        Task BulkCreateMealsAsync(IList<Meal> meals);
+
 		Task SaveAsync();
     }
 }

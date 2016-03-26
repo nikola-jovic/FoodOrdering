@@ -12,6 +12,7 @@ namespace FoodOrdering.BLL
             Bind<ICompaniesAdapter>().To<CompaniesAdapter>().InSingletonScope();
 	        Bind<IMealsService>().To<MealsService>().InSingletonScope();
 			Bind<IMealsAdapter>().To<MealsAdapter>().InSingletonScope();
-		}
+            Bind<IMealTagsService>().To<MealTagsService>().InSingletonScope();
+        }
     }
 }
