@@ -140,7 +140,7 @@ namespace FoodOrdering.WEB.Controllers
                         await _mealTagsService.BulkAddMealTags(new BulkAddMealTagsRequest { MealTags = listOfTags });
                         await _mealsService.BulkCreateMeals(new BulkCreateMealsRequest { Meals = listOfMeals });
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         //TODO: do something
                     }

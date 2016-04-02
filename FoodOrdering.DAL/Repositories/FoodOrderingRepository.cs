@@ -128,14 +128,11 @@ namespace FoodOrdering.DAL.Repositories
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    _foodOrderingDbFactory.GetDatabase().Dispose();
-                }
-            }
-            _disposed = true;
+	        if (!_disposed && disposing)
+	        {
+		        _foodOrderingDbFactory.GetDatabase().Dispose();
+	        }
+	        _disposed = true;
         }
     }
 }
