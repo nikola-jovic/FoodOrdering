@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - GladniSmo.com</title>
     @Styles.Render("~/Content/css")
+	@Styles.Render("~/Content/datatables")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
@@ -25,7 +26,7 @@
 			</div>
 		</div>
 	</div>
-
+	@Scripts.Render("~/bundles/jquery")
 	<div class="container">
 		@RenderBody()
 	</div>
@@ -34,9 +35,9 @@
 			<p align="center" style="padding-top: 5px;">&copy; @DateTime.Now.Year - GladniSmo.com</p>
 		</div>
 	</footer>
-
-	@Scripts.Render("~/bundles/jquery")
+	
 	@Scripts.Render("~/bundles/bootstrap")
+	@Scripts.Render("~/bundles/datatables")
 	@RenderSection("scripts", required: false)
 	
 </body>

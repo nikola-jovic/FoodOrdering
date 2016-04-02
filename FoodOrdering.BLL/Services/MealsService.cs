@@ -51,7 +51,14 @@ namespace FoodOrdering.BLL.Services
 
         public async Task CreateMeal(CreateMealRequest request)
         {
-            throw new NotImplementedException();
+	        try
+	        {
+		        await _foodOrderingRepository.CreateMeal(request.Name, request.Category, request.Description, request.Price).ConfigureAwait(false);
+	        }
+	        catch (Exception)
+	        {
+		        //TODO: do something
+	        }
         }
 
         public async Task BulkCreateMeals(BulkCreateMealsRequest request)
@@ -76,7 +83,14 @@ namespace FoodOrdering.BLL.Services
 
         public async Task UpdateMeal(UpdateMealRequest request)
         {
-            throw new NotImplementedException();
+	        try
+	        {
+		        await _foodOrderingRepository.UpdateMealAsync(request.Id, request.Name, request.Description, request.Price, request.Category).ConfigureAwait(false);
+	        }
+	        catch (Exception)
+	        {
+		        //TODO: do something
+	        }
         }
 
         public async Task DeleteMeal(DeleteMealRequest request)

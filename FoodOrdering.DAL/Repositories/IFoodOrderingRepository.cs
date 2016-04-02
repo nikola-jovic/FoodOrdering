@@ -26,6 +26,10 @@ namespace FoodOrdering.DAL.Repositories
         Task BulkCreateMealTagsAsync(IList<string> mealTags);
 
         Task BulkCreateMealsAsync(IList<Meal> meals);
+		
+		Task CreateMeal(string name, int category, string description, decimal price);
+
+		Task UpdateMealAsync(long id, string name, string description, decimal price, int category);
 
 		Task SaveAsync();
     }

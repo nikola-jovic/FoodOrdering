@@ -16,6 +16,8 @@ namespace FoodOrdering.WEB.Models
 		public string Description { get; set; }
 
 		public decimal Price { get; set; }
+		public bool Errors { get; set; }
+		public string ErrorMessage { get; set; }
 
 		//public byte[] Image { get; set; }
 

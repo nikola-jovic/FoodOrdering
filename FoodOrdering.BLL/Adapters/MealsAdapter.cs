@@ -33,7 +33,8 @@ namespace FoodOrdering.BLL.Adapters
 				Category = meal.Category,
 				Description = meal.Description,
 				Image = meal.Image,
-				Price = meal.Price
+				Price = meal.Price,
+				Menus = meal.MenuMeals.ToList()
 			};
 		}
 	}
