@@ -65,7 +65,7 @@ namespace FoodOrdering.WEB.Controllers
 				{
 					Name = meal.Name,
 					Description = meal.Description,
-					Category = meal.Category,
+					Category = (int)meal.Category,
 					Price = meal.Price,
 					CorrelationId = Guid.NewGuid().ToString(),
 					Requestor = ClaimsPrincipal.Current.Identity.Name
@@ -105,7 +105,7 @@ namespace FoodOrdering.WEB.Controllers
 					Id = model.Id,
 					Name = model.Name,
 					Description = model.Description,
-					Category = model.Category,
+					Category = (int)model.Category,
 					Price = model.Price,
 					CorrelationId = Guid.NewGuid().ToString(),
 					Requestor = ClaimsPrincipal.Current.Identity.Name
@@ -148,7 +148,7 @@ namespace FoodOrdering.WEB.Controllers
 			if (getMealResponse.Meal.Menus.Any())
 			{
 				model = model.Adapt(getMealResponse.Meal);
-				model.Errors = true;
+				model.ErrorsOccured = true;
 				model.ErrorMessage = "There are menus associated with this company.";
 				return View(model);
 			}

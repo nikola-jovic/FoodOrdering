@@ -200,6 +200,7 @@
     <Compile Include="Models\CompanyModel.cs" />
     <Compile Include="Models\Identity\IdentityDbContext.cs" />
     <Compile Include="Models\Identity\ApplicationUser.cs" />
+    <Compile Include="Models\MealCategories.cs" />
     <Compile Include="Models\MealModel.cs" />
     <Compile Include="Models\UsersModel.cs" />
     <Compile Include="Models\ViewModels\AddPhoneNumberViewModel.cs" />

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using FoodOrdering.BLL.Responses.DTO;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using FoodOrdering.BLL.Responses.DTO;
+using System.Reflection;
 
 namespace FoodOrdering.WEB.Models
 {
@@ -9,17 +11,33 @@ namespace FoodOrdering.WEB.Models
 	{
 		public long Id { get; set; }
 
+		[Required(ErrorMessage = @"Ime jela je obavezno.")]
+		[StringLength(100, ErrorMessage = @"{0} mora imati između {2} i {1} karaktera.", MinimumLength = 6)]
+		[Display(Name = @"Ime jela")]
 		public string Name { get; set; }
 
-		public int Category { get; set; }
-
+		[Display(Name = @"Opis jela")]
 		public string Description { get; set; }
 
+		[Display(Name = @"Cena jela")]
+		[Required(ErrorMessage = @"Cena jela je obavezna.")]
 		public decimal Price { get; set; }
-		public bool Errors { get; set; }
-		public string ErrorMessage { get; set; }
+
+		public MealCategories Category { get; set; }
 
 		//public byte[] Image { get; set; }
+
+		#region Helpers
+
+		public string CategoryDisplay(int mealCategory)
+		{
+			var correspondingEnum = (MealCategories)mealCategory;
+			return correspondingEnum.GetType()
+						.GetMember(correspondingEnum.ToString())
+						.First()
+						.GetCustomAttribute<DisplayAttribute>()
+						.GetName();
+		}
 
 		public MealModel Adapt(Meal mealToAdapt)
 		{
@@ -29,7 +47,7 @@ namespace FoodOrdering.WEB.Models
 			{
 				Id = mealToAdapt.Id,
 				Name = mealToAdapt.Name,
-				Category = mealToAdapt.Category,
+				Category = (MealCategories)mealToAdapt.Category,
 				Description = mealToAdapt.Description,
 				Price = mealToAdapt.Price
 			};
@@ -41,5 +59,14 @@ namespace FoodOrdering.WEB.Models
 
 			return mealsToAdapt.Select(Adapt).ToList();
 		}
+
+		#endregion Helpers
+
+		#region Other
+
+		public bool ErrorsOccured { get; set; }
+		public string ErrorMessage { get; set; }
+
+		#endregion Other
 	}
 }
