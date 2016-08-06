@@ -137,6 +137,14 @@ namespace FoodOrdering.DAL.Repositories
 			}
 		}
 
+		public async Task<IList<Menu>> GetMenus()
+		{
+			using (var database = _foodOrderingDbFactory.GetDatabase())
+			{
+				return await database.Menus.ToListAsync();
+			}
+		}
+
 		public async Task SaveAsync()
 		{
 			using (var database = _foodOrderingDbFactory.GetDatabase())

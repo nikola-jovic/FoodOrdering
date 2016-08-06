@@ -8,28 +8,30 @@
         <ul class="nav navbar-nav navbar-right">
 
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Manage<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    @if (User.IsInRole("SuperAdmin"))
-                    {
-                        <li>@Html.ActionLink("Users", "List", "Users")</li>
-	                    <li>@Html.ActionLink("Companies", "List", "Companies")</li>
-						<li>@Html.ActionLink("Meals", "List", "Meals")</li>
-                        <li role="separator" class="divider"></li>
-                    }
-                    <li>@Html.ActionLink("Manage your account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
-                </ul>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Administrator<span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+					@if (User.IsInRole("SuperAdmin"))
+					{
+						<li>@Html.ActionLink("Korisnici", "List", "Users")</li>
+						<li>@Html.ActionLink("Kompanije", "List", "Companies")</li>
+						<li>@Html.ActionLink("Jela", "List", "Meals")</li>
+						<li>@Html.ActionLink("Jelovnici", "List", "Menus")</li>
+						<li role="separator" class="divider"></li>
+					}
+					<li>@Html.ActionLink("Konfiguriši", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Izmeni podatke svog naloga" })</li>
+				</ul>
+
             </li>
 
 
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Izađi</a></li>
         </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Registruj se", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Prijava", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }

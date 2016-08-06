@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<FoodOrdering.WEB.Models.MealModel>
 
 @{
-	ViewBag.Title = "List";
+	ViewBag.Title = "Lista jela";
 }
 
 <p>
 	@Html.ActionLink("Dodaj jelo", "Create", "Meals", null, new {@class = "btn btn-success" })
 </p>
 
-<h4 style="padding-top: 2%;">Meals List</h4>
+<h4 style="padding-top: 2%;">Jela</h4>
 
 <div class="space-top">
 	<table class="table table-striped table-bordered dataTable table-responsive" id="datatableMeals">
