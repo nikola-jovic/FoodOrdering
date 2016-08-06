@@ -145,6 +145,15 @@ namespace FoodOrdering.DAL.Repositories
 			}
 		}
 
+		public async Task CreateMenu(DateTime startDate, DateTime endDate, IList<MenuMeal> menuMeals)
+		{
+			using (var database = _foodOrderingDbFactory.GetDatabase())
+			{
+				database.Menus.Add(new Menu { StartDate = startDate, EndDate = endDate, MenuMeals = menuMeals});
+				await database.SaveChangesAsync();
+			}
+		}
+
 		public async Task SaveAsync()
 		{
 			using (var database = _foodOrderingDbFactory.GetDatabase())

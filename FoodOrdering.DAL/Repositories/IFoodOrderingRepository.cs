@@ -33,6 +33,8 @@ namespace FoodOrdering.DAL.Repositories
 
 		Task<IList<Menu>> GetMenus();
 
+		Task CreateMenu(DateTime startDate, DateTime endDate, IList<MenuMeal> menuMeals);
+
 		Task SaveAsync();
 
 

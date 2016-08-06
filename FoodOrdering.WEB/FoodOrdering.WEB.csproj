@@ -487,6 +487,7 @@
     <Content Include="Views\Meals\Edit.cshtml" />
     <Content Include="Views\Meals\Delete.cshtml" />
     <Content Include="Views\Menus\List.cshtml" />
+    <Content Include="Views\Menus\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

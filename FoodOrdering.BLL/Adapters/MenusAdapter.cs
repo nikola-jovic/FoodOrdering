@@ -32,5 +32,18 @@ namespace FoodOrdering.BLL.Adapters
 				EndDate = menu.EndDate,
 			};
 		}
+
+		public IList<MenuMeal> AdaptMenuMeals(IList<Requests.DTO.MenuMeal> menuMeals)
+		{
+			if (menuMeals == null) throw new ArgumentNullException("menuMeals");
+
+			return menuMeals.Select(menuMeal => new MenuMeal
+			{
+				MenuId = menuMeal.MenuId,
+				MealId = menuMeal.MealId,
+				DayOfWeek = menuMeal.DayOfWeek
+			}).ToList();
+
+		}
 	}
 }

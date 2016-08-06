@@ -57,8 +57,10 @@
     <Compile Include="Requests\BulkCreateMealsRequest.cs" />
     <Compile Include="Requests\CreateCompanyRequest.cs" />
     <Compile Include="Requests\CreateMealRequest.cs" />
+    <Compile Include="Requests\CreateMenuRequest.cs" />
     <Compile Include="Requests\DeleteCompanyRequest.cs" />
     <Compile Include="Requests\DeleteMealRequest.cs" />
+    <Compile Include="Requests\DTO\MenuMeal.cs" />
     <Compile Include="Requests\GetCompaniesRequest.cs" />
     <Compile Include="Requests\GetCompanyRequest.cs" />
     <Compile Include="Request.cs" />

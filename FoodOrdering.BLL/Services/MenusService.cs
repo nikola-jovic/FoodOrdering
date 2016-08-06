@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FoodOrdering.BLL.Adapters;
+using FoodOrdering.BLL.Requests;
 using FoodOrdering.BLL.Responses;
 using FoodOrdering.DAL.DB;
 using FoodOrdering.DAL.Repositories;
@@ -33,6 +34,18 @@ namespace FoodOrdering.BLL.Services
 				//TODO: do something
 			}
 			return new GetMenusResponse { Menus = _menusAdapter.Adapt(menus) };
+		}
+
+		public async Task CreateMenu(CreateMenuRequest request)
+		{
+			try
+			{
+				await _foodOrderingRepository.CreateMenu(request.StartDate, request.EndDate, _menusAdapter.AdaptMenuMeals(request.MenuMeals));
+			}
+			catch (Exception)
+			{
+				//TODO: do something
+			}
 		}
 	}
 }
